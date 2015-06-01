@@ -55,7 +55,7 @@
 
     					{{> loginButtons}}
 					{{#if currentUser}}
-					{{/if}}
+					
           <div class="panel panel-success">
             <div class="panel-heading">
               <h3 class="panel-title">Chat</h3>
@@ -67,7 +67,7 @@
 								
             </div>
           </div>
-				
+				{{/if}}
 				</div>
 			</div>
    
@@ -94,6 +94,7 @@
             <thead>
               <tr>
                 <th>Fecha</th>
+								<th>Usuario</th>
                 <th>Mensaje</th>
               </tr>
             </thead>
@@ -119,8 +120,10 @@
 
 <template name="mensaje">
   <tr>
-    <td> {{fecha}}  </td> 
+    <td> {{fecha}} </td>
+		<td> {{currentUser.profile.name}} </td> 
 		<td> {{texto}} </td>
+
     
   </tr>
 </template>
