@@ -1,5 +1,18 @@
 
 Meteor.publish('mensajes', function () {
-    return Mensajes.find()
+
+    if (this.userId)
+    	return Mensajes.find()
+  	else
+    	return []
+
   })
 
+
+	Mensajes.allow({
+
+  insert: function (userId, doc) {
+    return !! userId
+
+  }
+	})
