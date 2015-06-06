@@ -1,7 +1,7 @@
 
 Meteor.publish('mensajes', function () {
 
-    if (this.userId)
+    if (this.userId) //comprueba que el usuario este logueado
     	return Mensajes.find()
   	else
     	return []
@@ -11,7 +11,8 @@ Meteor.publish('mensajes', function () {
 
 	Mensajes.allow({
 
-  insert: function (userId, doc) {
+  insert: function (userId, doc) { //doc es la coleccion de elementos que se envian como formulario (usuario,fecha,texto)
+		console.log(userId, doc) //muestra en consola los elementos userId y doc
     return !! userId
 
   }
