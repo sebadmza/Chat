@@ -1,0 +1,38 @@
+<template name="mensajes">
+	<table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+								<th>Mensaje</th>
+                <th>Usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+								{{#each mensajes}}
+    							{{> mensaje}}
+  							{{/each}}
+            </tbody>
+	</table>
+  <hr>
+  <form>
+    <div class="row">
+      <div class="col-xs-8">
+        <input class="form-control" type="text" name="mensaje" id="mensaje" autofocus>
+      </div>
+      <div class="col-xs-4">
+        <button class="btn btn-success" type="submit">Enviar</button>
+      </div>
+    </div>
+  </form>
+</template>
+	
+<template name="mensaje">
+	<tr>
+		<td> {{fecha}} </td>
+		<td> {{texto}} </td> 
+		<td> {{usuario}} </td>		
+	</tr>
+</template>
+
+
+

@@ -1,39 +1,43 @@
 
-  Meteor.subscribe('mensajes')
+  
+	var mensajesSub = Meteor.subscribe('mensajes')
+	var salonesSub  = Meteor.subscribe('salones')
+
 	//accountsUIBootstrap3.setLanguage('es')// SI LO DESCOMENTO NO ME MUESTRA LOS MENSAJES
 
-  Template.chat.helpers({
-    mensajes: function () {
-      return Mensajes.find({}, { sort: { fecha: 1 } }) //el 1 representa "ascendente" (javascript events) *los datos de mozilla son los mejores
-    }
-  })
-
-	Template.chat.events({
-  'submit': function (event) {
-
-    event.preventDefault()
-    var $mensaje = $('#mensaje')
-		var texto    = $mensaje.val().trim()
-		var usuario = Meteor.user()
-
-    if (texto)
-      Mensajes.insert({ 
-
-				texto: texto, 
-				fecha: new Date,
-				usuario: usuario.profile.name
-
-		 })
-
-    $mensaje.val('').focus()
+	Template.chat.helpers({
+  listo: function () {
+    return mensajesSub.ready() && salonesSub.ready()
   }
 	})
 
-	Template.mensaje.helpers({ // "helpers"cosas que yo quiero leer
-    fecha: function () {
-      return moment(this.fecha).format('LT')
-    }
-  })
+
+
+
+
+
+
+/*
+
+
+	Template.pruebaContexto.helpers({
+	externa: function() {
+			return { texto: 'Hola' }
+	},
+  usuario: function () {
+    return { nombre: 'Prueba' }
+  }
+})
+
+	Template.pruebaSesion.helpers({  
+  count: function () {
+    return Session.get('contador') //se avisa con este metodo que la funcion, en este caso 'count', puede cambiar de valor, para refrezcarlo.
+																	// Session es la conexion que existe entre el usuario y el servidor (es global, usarla con cuidado principalmente para no pisar variables locales)
+  }
+	})
+
+*/
+	
 
 
 

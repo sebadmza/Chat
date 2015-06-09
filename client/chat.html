@@ -1,17 +1,75 @@
-  <head>
+
+ <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Chat</title>
-
+		<link href="css/bootstrap.min.css" rel="stylesheet"> 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-          <div class="navbar-header">
+  {{> encabezado}} 	
+  <div class="container">		  
+					<hr><hr><hr>
+					{{#if currentUser}}
+				
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Salas de Chat</h3>
+            </div>
+            <div class="panel-body">
+               {{> chat}} <!-- llamada al template "chat"--> 			
+            </div>
+          </div>
+					{{else}}
+						<h1>Bienvenido</h1>
+
+						<div class="alert alert-warning text-center">
+						  Debe ingresar para utilizar el chat
+						</div>
+					{{/if}}
+					{{> loginButtons}} 
+					
+  </div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+<!--
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p> lo que se encuentra entre llaves dobles es una llamada a una funcion 
+</template>
+
+<template name="pruebaContexto">
+  <h1>
+    {{#with usuario}}  para especificar contexto. tambien puede utilizarse con esta estructura la funcion 'else' 
+      {{nombre}}
+			{{../externa.texto}}  ../ para acceder a un contexto superior .../ para el padre del contexto superior (padre del padre) es para	los templates anidados
+    {{/with}}
+	
+		{{usuario.nombre}}
+  </h1>
+</template>
+
+<template name="pruebaSesion">
+  <h1>
+    Valor de Session.get('contador'):
+    <span class="text-danger">{{count}}</span>
+  </h1>
+</template>
+-->
+<template name="encabezado">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+  	<div class="container">
+   		<div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -19,8 +77,8 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">METEOR</a>
-          </div>
-          <div class="navbar-collapse collapse">
+			</div>
+      <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
@@ -38,93 +96,29 @@
                 </ul>
               </li>/.nav-collapse -->
             </ul>
-          </div>
-        
-	
- 	
-  <div class="container">
-		  
-		
-
-		<div class="page-header">
-        <h1>Bienvenido a la conversación</h1>
-      </div>
-			
-      <div class="row">
-        <div class="col-sm-12">
-
-    					{{> loginButtons}}
-					{{#if currentUser}}
-				
-          <div class="panel panel-success">
-            <div class="panel-heading">
-              <h3 class="panel-title">Chat</h3>
-            </div>
-            <div class="panel-body">
-								
-               {{> chat}} <!-- llamada al template "chat"--> 
-								 
-								
-            </div>
-          </div>
-					{{/if}}
-				</div>
 			</div>
-   
-  </div>
-
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-
-
-</body>
-
-<!--
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p> lo que se encuentra entre llaves dobles es una llamada a una funcion 
+		</div>
+	</nav>
 </template>
--->
 
 <template name="chat">
-	<table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-								<th>Usuario</th>
-                <th>Mensaje</th>
-              </tr>
-            </thead>
-            <tbody>
-								{{#each mensajes}}
-    							{{> mensaje}} 
-  							{{/each}}
-            </tbody>
-  </table>
-<br /><br />
-<form>
-  <div class="row">
-    <div class="col-sm-11">
-      <input class="form-control" type="text" name="mensaje" id="mensaje" autofocus>
-    </div>
-    <div class="col-sm-1">
-      <button class="btn btn-success" type="submit"> Enviar </button>
-    </div>
+	{{#if listo}}
+		 <div class="row">
+      <div class="col-md-3">
+        {{> salones}}
+      </div>
+      <div class="col-md-9">
+        {{> mensajes}}
+     </div>
+		</div>
+  {{else}}
+    {{> cargando}}
+  {{/if}}
+
+</template>
+
+<template name="cargando">
+  <div class="alert alert-warning">
+    Cargando, por favor espere...
   </div>
-</form>
-
 </template>
-
-<template name="mensaje">
-  <tr>
-    <td> {{fecha}} </td>
-		<td> {{usuario}} </td> 
-		<td> {{texto}} </td>
-
-    
-  </tr>
-</template>
-
